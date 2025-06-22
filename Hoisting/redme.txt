@@ -1,0 +1,21 @@
+The code will undergo two phases:
+Memory Phase
+Execution Phase
+In Memory phase
+
+function showName(){  // Function declaration is hoisted to the top of their scope with its entire function body. Since showName() is in the global scope, it’s hoisted to the top of the global scope.
+    function foo(){};      // As mentioned above, it is hoisted to the top its scope. In this case, in the function scope showName() along with its entire function body. So, foo becomes the local variable of type 'function'.
+    foo = 'PANDA';       
+    return;
+};
+var foo = undefined;   // Only the declaration of 'var' is attached to the global scope with default initialization to 'undefined'. 
+Note: "During hoisting, JavaScript places function declarations like function showName() { ... } in memory before any var declarations, even if the var appears earlier in the source code."
+
+
+In the Execution Phase
+
+showName(); // Runs, but only changes local `foo` to PANDA
+console.log(foo); // LION
+Explanation:
+
+In the execution phase, var foo is re-initialised to 'LION' and in the execution of the function showName(), the function, foo(){} as hoisted to the top of its function body, will be overridden by the next line's foo variable with value 'PANDA', this foo becomes a local variable. Thus, on the console, we see 'LION' for foo.
