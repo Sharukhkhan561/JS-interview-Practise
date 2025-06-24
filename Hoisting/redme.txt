@@ -19,3 +19,36 @@ console.log(foo); // LION
 Explanation:
 
 In the execution phase, var foo is re-initialised to 'LION' and in the execution of the function showName(), the function, foo(){} as hoisted to the top of its function body, will be overridden by the next line's foo variable with value 'PANDA', this foo becomes a local variable. Thus, on the console, we see 'LION' for foo.
+
+ 
+ // Solution for method hoisting Example
+/*
+❌ TypeError: myObjA.sayHello is not a function. 
+When JS engine sees console.log(myObj.sayHello()), 
+myObjA is 'undefined' at that point (assignment hasn’t happened yet) 
+and thus, trying to access sayHello from undefined throws an error.
+*/
+console.log(myObjA.sayHello());
+
+/*
+❌ ReferenceError: Cannot access 'myObjB' before initialization. 
+When JS engine tries to run: 
+*/
+console.log(myObjB.sayHello()); 
+
+/*
+Since myObjB is still in the TDZ, a ReferenceError is thrown.
+*/
+console.log(myObjB.sayHello())
+
+var myObjA = {
+  sayHello: function () {
+    return "Hello!";
+  }
+};
+
+const myObjB = {
+  sayHello: function () {
+    return "Hello!";
+  }
+};
