@@ -1,0 +1,66 @@
+// this is a object and u want to copy this object 
+const user = {
+    name: "Sharukh",
+    address: {
+      city: "Noida"
+    }
+  };
+
+  //Case: 1 Shallow copy
+  const copy = { ...user };
+
+copy.name = "Rahul";
+copy.address.city = "Delhi";
+
+console.log(user.name);         // "Sharukh"
+console.log(user.address.city); // "Delhi" 😮
+
+name change karne par original object par koi effect nahi hua, lekin address.city change karne se original bhi change ho gaya.
+Aisa kyun?
+Kyunki spread operator (...) sirf first level ki copy banata hai. Nested address object dono jagah same reference ko point karta hai.
+
+// Case: 2 Deep copy
+const copy = deepClone(user);
+
+copy.address.city = "Delhi";
+
+console.log(user.address.city); // "Noida"
+console.log(copy.address.city); // "Delhi"
+
+Ab dono independent hain.
+Yaad rakhna: Shallow copy mein nested references share ho sakte hain. Deep clone mein supported nested values ko recursively clone kiya jata hai.
+
+
+function deepClone(value) {
+  // Step 1: Primitive values ko directly return karo
+  if (value === null || typeof value !== "object") {
+    return value;
+  }
+
+  // Step 2: Array ya object ki empty copy banao
+  const clone = Array.isArray(value) ? [] : {};
+
+  // Step 3: Har property ko recursively clone karo
+  for (const key in value) {
+    if (Object.hasOwn(value, key)) {
+      clone[key] = deepClone(value[key]);
+    }
+  }
+
+  // Step 4: Naya object return karo
+  return clone;
+}
+Ye basic version nested plain objects aur arrays ke liye kaam karta hai. Lekin circular references, Date, Map, Set aur special properties handle nahi karta.
+Ab har step ko samjho.
+
+if (value === null || typeof value !== "object") {
+  return value;
+}
+Is condition ka matlab hai: agar value primitive hai, to uski recursion ki zaroorat nahi.
+
+Examples:
+deepClone(10);          // 10
+deepClone("Hello");     // "Hello"
+deepClone(true);        // true
+deepClone(undefined);   // undefined
+deepClone(null);        // null
