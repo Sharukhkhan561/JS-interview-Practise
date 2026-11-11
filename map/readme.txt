@@ -16,7 +16,7 @@ const result = numbers.myMap((value, index, arr) => {
   return value + index;
 });
 
-console.log(result);
+console.log(result)
 // [10, 21, 32]
 
 Notice that the callback receives three arguments: value, index, and arr
